@@ -1,20 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
 <head>
+
+
     <meta charset="UTF-8">
-    <title>Webpage</title>
+
+    <title>My Webpage</title>
+
     <style>
+
+
         body {
+
             font-family: Arial, sans-serif;
             padding: 30px;
+
         }
 
         button {
+
             padding: 10px 20px;
             font-size: 16px;
+
         }
+
     </style>
+
 </head>
+
+
 <body>
 
 
@@ -22,8 +38,12 @@
 
     <h1 id="greeting">Hello there!</h1>
     <h1 id="inputPhrase">Hello there!</h1>
-    
+
+
     <button onclick="changeText()">Click Me</button>
+
+
+    <p>Text <a href="https://drive.google.com/file/d/1vt8WNd0HbkdTkehigZwl_Dv6GZpRl4ZU/view?usp=share_link">Abáachi Mizaa Naałtsoozi</a>.</p>
 
 
     <script>// Set variables in JavaScript
@@ -36,25 +56,31 @@
 
 
         // Use the variables to change HTML content
-        document.getElementById("greeting").innerText = `Hi, ${userName}. ${message}`;
+        document.getElementById("greeting").innerText = `Hi, ${userName}. ${message}`;</script>
 
 
-    </script>
+    <script>///Change Text
 
-
-    <script>
-
-
-        ///Change Text
 
         function changeText() {
 
 
             document.getElementById("greeting").innerText = "You clicked the button!";
 
-        }
+        }</script>
 
-    </script>
+
+
+    <script>///Go to URL
+
+
+        function goToURL() {
+
+
+            document.getElementById("greeting").innerText = "You clicked the button!";
+
+        }</script>
+
 
 </body>
 </html>
