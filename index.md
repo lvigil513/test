@@ -1,11 +1,8 @@
 
 
 ---
-layout: post
+Landing Page
 ---
-title: Blogging Like a Hacker
----
-
 
 Hello World
 
