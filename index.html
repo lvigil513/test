@@ -1,98 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
-
-
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Website App</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
 
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 24px;
+      background-color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
 
-    <meta charset="UTF-8">
+    h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
 
-    <title>My Webpage</title>
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
 
-    <style>
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      margin-bottom: 16px;
+    }
 
+    button {
+      padding: 10px 16px;
+      font-size: 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            padding: 40px;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-        }
-    </style>
-
-
-    <script src="translator.js"></script>
-
-
-    <title>Centered Text</title>
-
-    <style>
-        .center-text {
-            text-align: center;
-        }
-    </style>
-
+    .output {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
 </head>
-
-
 <body>
+  <div class="container">
+    <h1>Translator</h1>
+    <label for="inputPhrase">Enter Text</label>
+    <input type="text" id="inputPhrase" placeholder="Type something..." />
+    <button onclick="translateInput()">Translate</button>
+    <div class="output" id="outputArea"></div>
+  </div>
 
+  <script>
+    // Translator class
+    class Translator {
+      constructor(dictionary) {
+        this.words = [];
+        this.finalSentences = [];
+        this.finalSentencesTranslated = [];
+        this.dictionaryMain = dictionary || { english: {} };
+      }
 
+      sortIntoSentences(input) {
+        let inputPhrase = input.toLowerCase();
+        let sentences = [];
+        let sentencesModified = [];
 
+        if (inputPhrase.length > 0) {
+          sentences = inputPhrase.split(/[.!?,;:]/);
 
-    <h1 id="greeting">Hello there!</h1>
-    <h1 id="inputPhrase">Hello there!</h1>
+          for (let item of sentences) {
+            let trimmed = item.trim().replace(/ /g, "_");
+            if (trimmed.length > 0) {
+              let capitalized = trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
+              sentencesModified.push(capitalized);
+            }
+          }
 
+          this.finalSentences = sentencesModified;
+        }
+      }
 
-    <button onclick="changeText()">Click Me</button>
+      translate(input) {
+        this.sortIntoSentences(input);
+        this.finalSentencesTranslated = [];
 
+        for (let item of this.finalSentences) {
+          for (let [word, replacement] of Object.entries(this.dictionaryMain.english)) {
+            if (item === word) {
+              this.finalSentencesTranslated.push(replacement);
+            }
+          }
+        }
 
+        return this.finalSentencesTranslated.join(" ");
+      }
 
+      directTranslation(input) {
+        let inputPhrase = input.toLowerCase().replace(/ /g, "_");
+        let returnPhrase = "";
 
-    <p>Click this <a href="https://drive.google.com/file/d/1vt8WNd0HbkdTkehigZwl_Dv6GZpRl4ZU/view?usp=share_link">link</a>.</p>
-    
+        for (let [word, replacement] of Object.entries(this.dictionaryMain.english)) {
+          if (inputPhrase === word) {
+            returnPhrase = replacement;
+            break;
+          }
+        }
 
+        if (returnPhrase.length > 0) {
+          returnPhrase = returnPhrase.charAt(0).toUpperCase() + returnPhrase.slice(1);
+        }
 
-    <script>// Set variables in JavaScript
+        return returnPhrase;
+      }
+    }
 
+    // Example dictionary
+    const dictionary = {
+      english: {
+        "hello_world": "hola_mundo",
+        "how_are_you": "cómo_estás",
+        "it's_great": "es_genial"
+      }
+    };
 
+    const translator = new Translator(dictionary);
 
-
-        let userName = "User";
-        let message = "Welcome to the site!";
-
-
-        // Use the variables to change HTML content
-        document.getElementById("greeting").innerText = `Hi, ${userName}. ${message}`;</script>
-
-
-    <script>///Change Text
-
-
-        function changeText() {
-
-
-            document.getElementById("greeting").innerText = "You clicked the button!";
-
-        }</script>
-
-
-
-    <script>///Go to URL
-
-
-        function goToURL() {
-
-
-            document.getElementById("greeting").innerText = "You clicked the button!";
-
-        }</script>
-
-
+    function translateInput() {
+      const input = document.getElementById("inputPhrase").value;
+      const result = translator.translate(input);
+      document.getElementById("outputArea").innerText = result || "No match found.";
+    }
+  </script>
 </body>
 </html>
